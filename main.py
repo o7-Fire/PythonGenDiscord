@@ -58,7 +58,7 @@ def main():
     worker = 20
     print("Max Thread: " + str(worker))
     with concurrent.futures.ThreadPoolExecutor(max_workers=worker) as executor:
-      ra = range(7)#how many token you need
+      ra = range(15)#how many token you need
       ralen = len(ra)
       print("Generating: "+str(ralen))
       if(ralen == 1): #peak code optimization
