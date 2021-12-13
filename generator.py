@@ -56,9 +56,10 @@ class TokenGenerator:
               "client_build_number": int(build_num),
               "client_event_source": None
           }, separators=(',', ':')).encode()).decode()
-        except:
-          print("[???] Major Failure")
-          
+        except Exception as e:
+          print("[{}] Major Failure {}".format(self.id, e))#cry about it
+          # bro wtf cringe .format()
+          #java String.format habit
         print("[{}] Ready!".format(self.id))#never printed ???
         #mmm good point
         #ay it just printed holy thats a lot of debug messages
@@ -115,25 +116,28 @@ class TokenGenerator:
         }
 
         response = self.CreateAccount(payload)
+        #TODO this is fail
+        #maybe manually solve the captcha and then input the hcaptcha tokens??
+        #host webserver here for slave
+        #ok i send you the code nevermind making new replit
+        #ever try headless browser
         if 'captcha_key' in response:
             while 1:
                 times = 0
-                print("[?] Attempting to solve Captcha")
+                print("[{}] Attempting to solve Captcha".format(self.id))
                 captcha_solved = bypass(
                     "f5561ba9-8f1e-40ca-9b5b-a0b3f719ef34", "discord.com", self.UsedProxy)
                 #print(captcha_solved)
-                if captcha_solved != False:
+                if captcha_solved != False: #look in unuseful-tech for proxies
+                    print("[{}] Captcha Solved !".format(self.id))
                     break
                 times += 1
-                if times >= 5: 
-                  print("[!] Captcha Fail xd")
-                  return '[!] Captcha Fail'
-            response = self.CreateAccount(payload, captcha_solved)
-            print("[!] Captcha Solved")
-
+                if times >= 5: xd
+                  print("[{}] Captcha Fail xd".format(self.id))
+                  return f'[{self.id}] Captcha Fail' #thank you man finally sane person
+            response = self.CreateAccount(payload, captcha_solved)#fuck you #lol
         if 'retry_after' in response:
-            print("[!] Rate limit! ({})".format(str(response['retry_after'])))
-            return ""
+            print("[{}] Rate limit! ({})".format(self.id, str(response['retry_after'])))
             time.sleep((response['retry_after'] / 1000) + 5)
             response = self.CreateAccount(payload, bypass(
                 "f5561ba9-8f1e-40ca-9b5b-a0b3f719ef34", "discord.com", self.UsedProxy))
@@ -178,7 +182,7 @@ class TokenGenerator:
         check = self.session.patch('https://discord.com/api/v9/users/@me',
                            headers=headers, json=payload)
         if check.status_code == 403:
-            return "[!] Token Locked!"
+            return f"[{self.id}] Token Locked!"
         elif check.status_code == 400:
             print(check.status_code)
             print(check.text)

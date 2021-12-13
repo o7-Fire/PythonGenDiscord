@@ -46,8 +46,8 @@ def GenerateToken(workerID):
                 SendToken(generatedToken)
                 break
             else: 
-              print(res)
-              print("[{}] Fail to get token, we get em next time".format(workerID))
+              print(f'[{workerID}]-No-Token: {res}')
+              #print("[{}] Fail to get token, we get em next time".format(workerID))
         except Exception as e: #rate limit lmaooo
           print("[{}] Fail: {}".format(workerID,e))
           continue # https://cdn.discordapp.com/attachments/741160342595305596/911980859203129344/caption.gif
